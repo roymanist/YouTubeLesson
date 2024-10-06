@@ -9,13 +9,12 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-
-public class NotebookRepositoryImpl  implements NoteService {
-
+public class NoteServiceImpl implements NoteService {
     private final NotebookRepository repository;
+
     @Override
     public List<Note> findAllNotes() {
-        return  repository.findAll();
+        return repository.findAll();
     }
 
     @Override
@@ -25,7 +24,6 @@ public class NotebookRepositoryImpl  implements NoteService {
         note.setText(text);
         repository.save(note);
         return "Saved";
-
     }
 
     @Override
@@ -34,14 +32,17 @@ public class NotebookRepositoryImpl  implements NoteService {
     }
 
     @Override
-    public Note findById(String id) {
-        return null;
+    public Note findById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
     @Override
-    public void deleteNote(String id) {
-
+    public void deleteNote(Long id) {
+        repository.deleteById(id);
     }
 
-
+    @Override
+    public void deleteByName(String name) {
+        repository.deleteByName(name);
+    }
 }

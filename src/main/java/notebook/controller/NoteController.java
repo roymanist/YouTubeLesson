@@ -1,5 +1,6 @@
 package notebook.controller;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import notebook.model.Note;
 import notebook.service.NoteService;
@@ -10,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/notes")
 @AllArgsConstructor
+
 public class NoteController {
 
 
@@ -29,20 +31,28 @@ public class NoteController {
     }
 
     @GetMapping("CreateNote")
-    public Note createNote(@RequestParam String id,@RequestParam String name,@RequestParam String text)
+    public String createNote(@RequestParam String name,@RequestParam String text)
     {
-        return service.createNote(id,name,text);
+        return service.createNote(name,text);
+    }
+
+    @GetMapping("DeleteByName")
+    @Transactional
+    public void deleteByName(@RequestParam String name)
+    {
+         service.deleteByName(name);
+
     }
 
 
     @GetMapping("/find/{id}")
-    public Note findById(@PathVariable String id)
+    public Note findById(@PathVariable Long id)
     {
         return service.findById(id);
     }
 
     @GetMapping("delete")
-    public void DeleteNote(@RequestParam String id)
+    public void DeleteNote(@RequestParam Long id)
     {
          service.deleteNote(id);
     }

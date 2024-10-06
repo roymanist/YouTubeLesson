@@ -2,15 +2,13 @@ package notebook.service;
 
 import notebook.model.Note;
 
-
 import java.util.List;
 
-
 public interface NoteService {
-     List<Note> findAllNotes() ;
-     Note createNote(String id, String name, String text);
+     List<Note> findAllNotes();
+     String createNote(String name, String text);
      Note saveNote(Note note);
-     Note findById(String id);
-     Note updateNote(Note note);
-     void deleteNote(String id);
-    }
+     Note findById(Long id);
+     void deleteNote(Long id);
+     void deleteByName(String name);
+}
